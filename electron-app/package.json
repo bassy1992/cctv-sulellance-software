@@ -51,7 +51,9 @@
       ],
       "icon": "icon.png",
       "publisherName": "CCTV Surveillance",
-      "verifyUpdateCodeSignature": false
+      "verifyUpdateCodeSignature": false,
+      "sign": null,
+      "signingHashAlgorithms": []
     },
     "nsis": {
       "oneClick": false,
