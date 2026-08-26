@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Installing CCTV Surveillance</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background: rgba(30, 41, 59, 0.8);
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .logo {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .logo svg {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 15px;
+    }
+    
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    
+    .subtitle {
+      text-align: center;
+      color: #94a3b8;
+      margin-bottom: 40px;
+      font-size: 14px;
+    }
+    
+    .progress-container {
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(148, 163, 184, 0.2);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+      width: 0%;
+      transition: width 0.3s ease;
+      border-radius: 4px;
+    }
+    
+    .progress-text {
+      font-size: 14px;
+      color: #cbd5e1;
+      text-align: center;
+    }
+    
+    .progress-percent {
+      font-size: 24px;
+      font-weight: 600;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    
+    .status {
+      text-align: center;
+      color: #94a3b8;
+      font-size: 13px;
+      margin-top: 20px;
+    }
+    
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .error {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 20px;
+      color: #fca5a5;
+      font-size: 14px;
+    }
+    
+    .steps {
+      margin-top: 30px;
+    }
+    
+    .step {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.4);
+      font-size: 13px;
+      transition: all 0.3s ease;
+    }
+    
+    .step.active {
+      background: rgba(59, 130, 246, 0.2);
+      border-left: 3px solid #3b82f6;
+    }
+    
+    .step.complete {
+      background: rgba(34, 197, 94, 0.2);
+      border-left: 3px solid #22c55e;
+    }
+    
+    .step-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+    
+    .step-text {
+      flex: 1;
+      color: #cbd5e1;
+    }
+    
+    .step.active .step-text {
+      color: #fff;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10" stroke="#3b82f6"/>
+        <circle cx="12" cy="12" r="3" fill="#3b82f6"/>
+        <line x1="12" y1="2" x2="12" y2="9" stroke="#8b5cf6"/>
+      </svg>
+    </div>
+    
+    <h1>Installing CCTV Surveillance</h1>
+    <p class="subtitle">Setting up your surveillance system...</p>
+    
+    <div class="progress-container">
+      <div class="progress-percent" id="percent">0%</div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressBar"></div>
+      </div>
+      <div class="progress-text" id="message">
+        <span class="spinner"></span>
+        Initializing installation...
+      </div>
+    </div>
+    
+    <div class="steps">
+      <div class="step" id="step1">
+        <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span class="step-text">Checking prerequisites</span>
+      </div>
+      <div class="step" id="step2">
+        <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span class="step-text">Downloading from GitHub</span>
+      </div>
+      <div class="step" id="step3">
+        <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span class="step-text">Setting up backend (Django)</span>
+      </div>
+      <div class="step" id="step4">
+        <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span class="step-text">Setting up frontend (React)</span>
+      </div>
+      <div class="step" id="step5">
+        <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span class="step-text">Finalizing installation</span>
+      </div>
+    </div>
+    
+    <div class="status" id="status">
+      This may take several minutes depending on your internet connection...
+    </div>
+    
+    <div class="error" id="error" style="display: none;"></div>
+  </div>
+  
+  <script>
+    const progressBar = document.getElementById('progressBar');
+    const percentText = document.getElementById('percent');
+    const messageText = document.getElementById('message');
+    const statusText = document.getElementById('status');
+    const errorDiv = document.getElementById('error');
+    
+    const steps = {
+      0: 'step1',
+      20: 'step2',
+      50: 'step3',
+      75: 'step4',
+      90: 'step5'
+    };
+    
+    function updateProgress(progress) {
+      const { message, percent, error } = progress;
+      
+      if (error) {
+        errorDiv.textContent = message;
+        errorDiv.style.display = 'block';
+        messageText.innerHTML = '<span style="color: #ef4444;">❌ Installation failed</span>';
+        return;
+      }
+      
+      progressBar.style.width = `${percent}%`;
+      percentText.textContent = `${percent}%`;
+      messageText.innerHTML = `<span class="spinner"></span>${message}`;
+      
+      // Update steps
+      Object.entries(steps).forEach(([threshold, stepId]) => {
+        const stepElement = document.getElementById(stepId);
+        if (percent >= parseInt(threshold)) {
+          stepElement.classList.add('complete');
+          stepElement.classList.remove('active');
+        } else if (percent >= parseInt(threshold) - 10) {
+          stepElement.classList.add('active');
+          stepElement.classList.remove('complete');
+        } else {
+          stepElement.classList.remove('active', 'complete');
+        }
+      });
+      
+      if (percent >= 100) {
+        messageText.innerHTML = '✓ Installation complete!';
+        statusText.textContent = 'Starting application...';
+      }
+    }
+    
+    // Listen for installation progress
+    if (window.electron) {
+      window.electron.onInstallProgress((progress) => {
+        updateProgress(progress);
+      });
+    }
+  </script>
+</body>
+</html>
