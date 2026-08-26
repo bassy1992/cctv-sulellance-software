@@ -1,0 +1,6 @@
+{
+  "name": "Tapo Surveillance",
+  "description": "Desktop security camera surveillance system frontend for Tapo TC40 cameras with live multi-cam monitoring, local recording controls, timeline playback, and storage management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
