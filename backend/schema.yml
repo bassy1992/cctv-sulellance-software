@@ -1,0 +1,1313 @@
+openapi: 3.0.3
+info:
+  title: Surveillance VMS API
+  version: 1.0.0
+  description: API documentation for the CCTV surveillance management backend.
+paths:
+  /api/cameras/:
+    get:
+      operationId: api_cameras_list
+      description: Return plain list (not paginated dict) to match frontend Camera[]
+        expectation.
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Camera'
+          description: ''
+    post:
+      operationId: api_cameras_create
+      description: ViewSet for managing cameras.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CameraForm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CameraForm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CameraForm'
+        required: true
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CameraForm'
+          description: ''
+  /api/cameras/{id}/:
+    get:
+      operationId: api_cameras_retrieve
+      description: ViewSet for managing cameras.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this Camera.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Camera'
+          description: ''
+    put:
+      operationId: api_cameras_update
+      description: ViewSet for managing cameras.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this Camera.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CameraForm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CameraForm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CameraForm'
+        required: true
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CameraForm'
+          description: ''
+    patch:
+      operationId: api_cameras_partial_update
+      description: ViewSet for managing cameras.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this Camera.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCameraForm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCameraForm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCameraForm'
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CameraForm'
+          description: ''
+    delete:
+      operationId: api_cameras_destroy
+      description: ViewSet for managing cameras.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this Camera.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/cameras/{id}/health_check/:
+    get:
+      operationId: api_cameras_health_check_retrieve
+      description: Perform health check on camera.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this Camera.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Camera'
+          description: ''
+  /api/cameras/{id}/ptz/:
+    post:
+      operationId: api_cameras_ptz_create
+      description: ViewSet for managing cameras.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this Camera.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Camera'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Camera'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Camera'
+        required: true
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Camera'
+          description: ''
+  /api/cameras/{id}/record/start/:
+    post:
+      operationId: api_cameras_record_start_create
+      description: ViewSet for managing cameras.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this Camera.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Camera'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Camera'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Camera'
+        required: true
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Camera'
+          description: ''
+  /api/cameras/{id}/record/stop/:
+    post:
+      operationId: api_cameras_record_stop_create
+      description: ViewSet for managing cameras.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this Camera.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Camera'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Camera'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Camera'
+        required: true
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Camera'
+          description: ''
+  /api/cameras/{id}/snapshot/:
+    post:
+      operationId: api_cameras_snapshot_create
+      description: ViewSet for managing cameras.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this Camera.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Camera'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Camera'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Camera'
+        required: true
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Camera'
+          description: ''
+  /api/cameras/{id}/stream-info/:
+    get:
+      operationId: api_cameras_stream_info_retrieve
+      description: Get camera stream information or start HLS conversion.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this Camera.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Camera'
+          description: ''
+  /api/cameras/test-connection/:
+    post:
+      operationId: api_cameras_test_connection_create
+      description: Test camera connection without creating a camera record.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Camera'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Camera'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Camera'
+        required: true
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Camera'
+          description: ''
+  /api/recordings/:
+    get:
+      operationId: api_recordings_list
+      description: 'Return paginated recordings in frontend-compatible format: {items,
+        totalCount, page, pageSize, totalPages}.'
+      parameters:
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: pageSize
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRecordingList'
+          description: ''
+  /api/recordings/{id}/:
+    get:
+      operationId: api_recordings_retrieve
+      description: ViewSet for managing recordings (read-only, except delete).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this Recording.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recording'
+          description: ''
+    delete:
+      operationId: api_recordings_destroy
+      description: Delete recording and associated file.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this Recording.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/recordings/{id}/video/:
+    get:
+      operationId: api_recordings_video_retrieve
+      description: Stream or download recording video file.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: A UUID string identifying this Recording.
+        required: true
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recording'
+          description: ''
+  /api/recordings/active/:
+    get:
+      operationId: api_recordings_active_retrieve
+      description: Get currently active recordings.
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recording'
+          description: ''
+  /api/recordings/cleanup/:
+    post:
+      operationId: api_recordings_cleanup_create
+      description: Clean up old recordings based on retention policy.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Recording'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Recording'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Recording'
+        required: true
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recording'
+          description: ''
+  /api/recordings/stats/:
+    get:
+      operationId: api_recordings_stats_retrieve
+      description: Get recording statistics and analytics.
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recording'
+          description: ''
+  /api/storage/cleanup/:
+    post:
+      operationId: api_storage_cleanup_create
+      description: Run storage cleanup to remove old recordings.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StorageRetentionInput'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StorageRetentionInput'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StorageRetentionInput'
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/storage/health/:
+    get:
+      operationId: api_storage_health_retrieve
+      description: Get storage health metrics for monitoring.
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/storage/retention/:
+    post:
+      operationId: api_storage_retention_create
+      description: Update retention policy settings.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StorageRetentionInput'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/StorageRetentionInput'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/StorageRetentionInput'
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/storage/status/:
+    get:
+      operationId: api_storage_status_retrieve
+      description: Get current storage status and analytics.
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/system/alerts/:
+    get:
+      operationId: api_system_alerts_retrieve
+      description: Get current system alerts and warnings.
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/system/events/:
+    get:
+      operationId: api_system_events_list
+      description: Get recent surveillance events.
+      parameters:
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: Maximum number of events to return.
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SurveillanceEvent'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/system/events/cleanup/:
+    post:
+      operationId: api_system_events_cleanup_create
+      description: Clean up old surveillance events.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemSettingsInput'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SystemSettingsInput'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SystemSettingsInput'
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/system/health/:
+    get:
+      operationId: api_system_health_retrieve
+      description: Get current system health status.
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/system/settings/:
+    get:
+      operationId: api_system_settings_retrieve
+      description: Get current system settings.
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/system/settings/reset/:
+    post:
+      operationId: api_system_settings_reset_create
+      description: Reset system settings to defaults.
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResetSettingsResponse'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResetSettingsResponse'
+          description: ''
+  /api/system/settings/update/:
+    put:
+      operationId: api_system_settings_update_update
+      description: Update system settings.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SettingsUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SettingsUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SettingsUpdateRequest'
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SettingsUpdateResponse'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SettingsUpdateResponse'
+          description: ''
+    patch:
+      operationId: api_system_settings_update_partial_update
+      description: Update system settings.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSettingsUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSettingsUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSettingsUpdateRequest'
+      security:
+      - cookieAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SettingsUpdateResponse'
+          description: ''
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SettingsUpdateResponse'
+          description: ''
+components:
+  schemas:
+    Camera:
+      type: object
+      description: Serializer for Camera model with computed fields for frontend compatibility.
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        name:
+          type: string
+          description: Human-friendly camera name
+          maxLength: 100
+        ip_address:
+          type: string
+          description: Camera IP address
+        port:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          description: RTSP port
+        onvif_port:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          nullable: true
+          description: ONVIF port for PTZ control
+        username:
+          type: string
+          description: Camera authentication username
+          maxLength: 50
+        hasPassword:
+          type: boolean
+          description: Check if camera has a password set.
+          readOnly: true
+        rtsp_stream_path:
+          type: string
+          description: Main stream path (e.g., /stream1)
+          maxLength: 200
+        sub_stream_path:
+          type: string
+          description: Sub stream path (e.g., /stream2)
+          maxLength: 200
+        status:
+          $ref: '#/components/schemas/CameraStatusEnum'
+        is_recording:
+          type: boolean
+          description: Currently recording
+        is_enabled:
+          type: boolean
+          description: Camera is enabled for monitoring
+        recording_enabled:
+          type: boolean
+          description: Recording is enabled for this camera
+        resolution:
+          type: string
+          description: Current video resolution
+          maxLength: 50
+        fps:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          description: Frames per second
+        bitrate_kbps:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          description: Video bitrate in kbps
+        model:
+          type: string
+          description: Camera model
+          maxLength: 100
+        location:
+          type: string
+          description: Physical location description
+          maxLength: 200
+        pan_tilt_supported:
+          type: boolean
+          description: Camera supports pan/tilt control
+        ptzCurrentPosition:
+          type: object
+          additionalProperties: {}
+          description: Get current PTZ position.
+          readOnly: true
+        last_seen:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Last successful communication
+        error_reason:
+          type: string
+          nullable: true
+          description: Last error message
+        mac_address:
+          type: string
+          nullable: true
+          description: MAC address
+          maxLength: 17
+        firmware_version:
+          type: string
+          nullable: true
+          description: Camera firmware version
+          maxLength: 100
+        liveHlsUrl:
+          type: string
+          description: Generate HLS stream URL for live viewing.
+          readOnly: true
+      required:
+      - hasPassword
+      - id
+      - ip_address
+      - last_seen
+      - liveHlsUrl
+      - location
+      - name
+      - ptzCurrentPosition
+      - username
+    CameraForm:
+      type: object
+      description: Serializer for camera form data (create/update operations).
+      properties:
+        name:
+          type: string
+          description: Human-friendly camera name
+          maxLength: 100
+        ip_address:
+          type: string
+          description: Camera IP address
+        port:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          description: RTSP port
+        onvif_port:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          nullable: true
+          description: ONVIF port for PTZ control
+        username:
+          type: string
+          description: Camera authentication username
+          maxLength: 50
+        password:
+          type: string
+          writeOnly: true
+        rtsp_stream_path:
+          type: string
+          description: Main stream path (e.g., /stream1)
+          maxLength: 200
+        sub_stream_path:
+          type: string
+          description: Sub stream path (e.g., /stream2)
+          maxLength: 200
+        location:
+          type: string
+        recording_enabled:
+          type: boolean
+          description: Recording is enabled for this camera
+        pan_tilt_supported:
+          type: boolean
+          description: Camera supports pan/tilt control
+      required:
+      - ip_address
+      - name
+      - username
+    CameraStatusEnum:
+      enum:
+      - ONLINE
+      - OFFLINE
+      - CONNECTING
+      - ERROR
+      type: string
+      description: |-
+        * `ONLINE` - Online
+        * `OFFLINE` - Offline
+        * `CONNECTING` - Connecting
+        * `ERROR` - Error
+    PaginatedRecordingList:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Recording'
+    PatchedCameraForm:
+      type: object
+      description: Serializer for camera form data (create/update operations).
+      properties:
+        name:
+          type: string
+          description: Human-friendly camera name
+          maxLength: 100
+        ip_address:
+          type: string
+          description: Camera IP address
+        port:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          description: RTSP port
+        onvif_port:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          nullable: true
+          description: ONVIF port for PTZ control
+        username:
+          type: string
+          description: Camera authentication username
+          maxLength: 50
+        password:
+          type: string
+          writeOnly: true
+        rtsp_stream_path:
+          type: string
+          description: Main stream path (e.g., /stream1)
+          maxLength: 200
+        sub_stream_path:
+          type: string
+          description: Sub stream path (e.g., /stream2)
+          maxLength: 200
+        location:
+          type: string
+        recording_enabled:
+          type: boolean
+          description: Recording is enabled for this camera
+        pan_tilt_supported:
+          type: boolean
+          description: Camera supports pan/tilt control
+    PatchedSettingsUpdateRequest:
+      type: object
+      properties:
+        settings:
+          type: object
+          additionalProperties: {}
+    Recording:
+      type: object
+      description: Serializer for Recording model with computed fields for frontend
+        compatibility.
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        cameraId:
+          type: string
+          readOnly: true
+        cameraName:
+          type: string
+          readOnly: true
+        cameraLocation:
+          type: string
+          readOnly: true
+        startTime:
+          type: string
+          format: date-time
+          readOnly: true
+        endTime:
+          type: string
+          format: date-time
+          readOnly: true
+        durationSeconds:
+          type: integer
+          readOnly: true
+        fileSizeMB:
+          type: number
+          format: float
+          readOnly: true
+        status:
+          $ref: '#/components/schemas/RecordingStatusEnum'
+        triggerType:
+          type: string
+          readOnly: true
+        videoUrl:
+          type: string
+          readOnly: true
+        thumbnailUrl:
+          type: string
+          readOnly: true
+        storageFilePath:
+          type: string
+          readOnly: true
+        resolution:
+          type: string
+          description: Video resolution
+          maxLength: 50
+        fps:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          description: Frames per second
+        bitrateKbps:
+          type: integer
+          readOnly: true
+        fileAvailable:
+          type: boolean
+          readOnly: true
+      required:
+      - bitrateKbps
+      - cameraId
+      - cameraLocation
+      - cameraName
+      - durationSeconds
+      - endTime
+      - fileAvailable
+      - fileSizeMB
+      - fps
+      - id
+      - resolution
+      - startTime
+      - storageFilePath
+      - thumbnailUrl
+      - triggerType
+      - videoUrl
+    RecordingStatusEnum:
+      enum:
+      - COMPLETED
+      - RECORDING
+      - FAILED
+      type: string
+      description: |-
+        * `COMPLETED` - Completed
+        * `RECORDING` - Recording
+        * `FAILED` - Failed
+    ResetSettingsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        settings:
+          type: object
+          additionalProperties: {}
+        error:
+          type: string
+          nullable: true
+    SettingsUpdateRequest:
+      type: object
+      properties:
+        settings:
+          type: object
+          additionalProperties: {}
+    SettingsUpdateResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        settings:
+          type: object
+          additionalProperties: {}
+        error:
+          type: string
+          nullable: true
+    StorageRetentionInput:
+      type: object
+      properties:
+        retentionDays:
+          type: integer
+          minimum: 1
+    SurveillanceEvent:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        type:
+          type: string
+          nullable: true
+        message:
+          type: string
+          nullable: true
+        timestamp:
+          type: string
+          format: date-time
+          nullable: true
+        camera_id:
+          type: string
+          nullable: true
+        severity:
+          type: string
+          nullable: true
+    SystemSettingsInput:
+      type: object
+      properties:
+        days:
+          type: integer
+          default: 30
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid

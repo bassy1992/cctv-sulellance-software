@@ -3,6 +3,8 @@ Serializers for camera API endpoints.
 """
 
 from rest_framework import serializers
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema_field
 from .models import Camera, CameraSnapshot
 
 
@@ -31,14 +33,17 @@ class CameraSerializer(serializers.ModelSerializer):
             'last_seen': {'read_only': True},
         }
     
-    def get_hasPassword(self, obj):
+    @extend_schema_field(OpenApiTypes.BOOL)
+    def get_hasPassword(self, obj) -> bool:
         """Check if camera has a password set."""
         return bool(obj.password)
     
-    def get_liveHlsUrl(self, obj):
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_liveHlsUrl(self, obj) -> str:
         """Generate HLS stream URL for live viewing."""
         return f'/cameras/{obj.id}/stream.m3u8'
     
+    @extend_schema_field(OpenApiTypes.OBJECT)
     def get_ptzCurrentPosition(self, obj):
         """Get current PTZ position."""
         return obj.ptz_position

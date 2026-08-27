@@ -3,6 +3,8 @@ Serializers for recording API endpoints.
 """
 
 from rest_framework import serializers
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema_field
 from .models import Recording, RecordingSegment
 
 
@@ -35,43 +37,56 @@ class RecordingSerializer(serializers.ModelSerializer):
             'storageFilePath', 'resolution', 'fps', 'bitrateKbps', 'fileAvailable'
         ]
     
-    def get_cameraId(self, obj):
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_cameraId(self, obj) -> str:
         return str(obj.camera.id)
     
-    def get_cameraName(self, obj):
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_cameraName(self, obj) -> str:
         return obj.camera.name
     
-    def get_cameraLocation(self, obj):
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_cameraLocation(self, obj) -> str:
         return obj.camera.location
     
+    @extend_schema_field(OpenApiTypes.DATETIME)
     def get_startTime(self, obj):
         return obj.start_time.isoformat() if obj.start_time else None
     
+    @extend_schema_field(OpenApiTypes.DATETIME)
     def get_endTime(self, obj):
         return obj.end_time.isoformat() if obj.end_time else None
     
+    @extend_schema_field(OpenApiTypes.INT)
     def get_durationSeconds(self, obj):
         return obj.duration_seconds
     
+    @extend_schema_field(OpenApiTypes.FLOAT)
     def get_fileSizeMB(self, obj):
         return obj.file_size_mb
     
+    @extend_schema_field(OpenApiTypes.STR)
     def get_triggerType(self, obj):
         return obj.trigger_type
     
-    def get_videoUrl(self, obj):
+    @extend_schema_field(OpenApiTypes.STR)
+    def get_videoUrl(self, obj) -> str:
         return obj.video_url or f'/api/recordings/{obj.id}/video/'
     
+    @extend_schema_field(OpenApiTypes.STR)
     def get_thumbnailUrl(self, obj):
         return obj.thumbnail_url
     
+    @extend_schema_field(OpenApiTypes.STR)
     def get_storageFilePath(self, obj):
         return obj.storage_file_path
     
+    @extend_schema_field(OpenApiTypes.INT)
     def get_bitrateKbps(self, obj):
         return obj.bitrate_kbps
 
-    def get_fileAvailable(self, obj):
+    @extend_schema_field(OpenApiTypes.BOOL)
+    def get_fileAvailable(self, obj) -> bool:
         import os
         return bool(obj.storage_file_path and os.path.isfile(obj.storage_file_path))
 

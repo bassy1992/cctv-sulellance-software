@@ -4,13 +4,49 @@ System API views for health monitoring, events, and settings.
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import serializers, status
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import OpenApiParameter, extend_schema
 from .services import SystemHealthService, EventService, SettingsService
 import logging
 
 logger = logging.getLogger(__name__)
 
 
+class SystemSettingsInputSerializer(serializers.Serializer):
+    days = serializers.IntegerField(required=False, default=30)
+
+
+class EmptySerializer(serializers.Serializer):
+    pass
+
+
+class SettingsUpdateRequestSerializer(serializers.Serializer):
+    settings = serializers.DictField(required=False, allow_empty=True)
+
+
+class SettingsUpdateResponseSerializer(serializers.Serializer):
+    success = serializers.BooleanField(required=False)
+    settings = serializers.DictField(required=False, allow_empty=True)
+    error = serializers.CharField(required=False, allow_null=True)
+
+
+class ResetSettingsResponseSerializer(serializers.Serializer):
+    success = serializers.BooleanField(required=False)
+    settings = serializers.DictField(required=False, allow_empty=True)
+    error = serializers.CharField(required=False, allow_null=True)
+
+
+class SurveillanceEventSerializer(serializers.Serializer):
+    id = serializers.CharField(required=False, allow_null=True)
+    type = serializers.CharField(required=False, allow_null=True)
+    message = serializers.CharField(required=False, allow_null=True)
+    timestamp = serializers.DateTimeField(required=False, allow_null=True)
+    camera_id = serializers.CharField(required=False, allow_null=True)
+    severity = serializers.CharField(required=False, allow_null=True)
+
+
+@extend_schema(responses={200: dict, 500: dict})
 @api_view(['GET'])
 def system_health(request):
     """
@@ -27,6 +63,7 @@ def system_health(request):
         )
 
 
+@extend_schema(responses={200: dict, 500: dict})
 @api_view(['GET'])
 def system_alerts(request):
     """
@@ -43,6 +80,18 @@ def system_alerts(request):
         )
 
 
+@extend_schema(
+    parameters=[
+        OpenApiParameter(
+            name='limit',
+            type=OpenApiTypes.INT,
+            location=OpenApiParameter.QUERY,
+            required=False,
+            description='Maximum number of events to return.'
+        )
+    ],
+    responses={200: SurveillanceEventSerializer(many=True), 500: dict},
+)
 @api_view(['GET'])
 def surveillance_events(request):
     """
@@ -60,6 +109,7 @@ def surveillance_events(request):
         )
 
 
+@extend_schema(request=SystemSettingsInputSerializer, responses={200: dict, 500: dict})
 @api_view(['POST'])
 def cleanup_events(request):
     """
@@ -81,6 +131,7 @@ def cleanup_events(request):
         )
 
 
+@extend_schema(responses={200: dict, 500: dict})
 @api_view(['GET'])
 def system_settings(request):
     """
@@ -97,6 +148,10 @@ def system_settings(request):
         )
 
 
+@extend_schema(
+    request=SettingsUpdateRequestSerializer,
+    responses={200: SettingsUpdateResponseSerializer, 500: SettingsUpdateResponseSerializer}
+)
 @api_view(['PUT', 'PATCH'])
 def update_system_settings(request):
     """
@@ -113,6 +168,10 @@ def update_system_settings(request):
         )
 
 
+@extend_schema(
+    request=EmptySerializer,
+    responses={200: ResetSettingsResponseSerializer, 500: ResetSettingsResponseSerializer}
+)
 @api_view(['POST'])
 def reset_settings(request):
     """
