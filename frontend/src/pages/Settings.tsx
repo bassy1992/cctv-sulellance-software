@@ -195,11 +195,11 @@ export const Settings: React.FC<SettingsProps> = ({
                 type="number"
                 min={5}
                 max={60}
-                value={formData.recordingSegmentDurationMinutes}
+                value={formData.segmentDurationMinutes}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    recordingSegmentDurationMinutes: Number(e.target.value) || 15
+                    segmentDurationMinutes: Number(e.target.value) || 15
                   })
                 }
                 className="w-full bg-[#0A0C10] border border-[#242933] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500 font-mono"
@@ -211,16 +211,16 @@ export const Settings: React.FC<SettingsProps> = ({
                 FFmpeg Hardware Acceleration
               </label>
               <select
-                value={formData.hardwareAcceleration}
+                value={formData.ffmpegHardwareAcc}
                 onChange={(e) =>
-                  setFormData({ ...formData, hardwareAcceleration: e.target.value as any })
+                  setFormData({ ...formData, ffmpegHardwareAcc: e.target.value as 'auto' | 'nvenc' | 'qsv' | 'cpu' })
                 }
                 className="w-full bg-[#0A0C10] border border-[#242933] rounded-lg px-3 py-2 text-xs text-gray-200 focus:outline-none focus:border-blue-500 cursor-pointer"
               >
-                <option value="none" className="bg-[#11141B] text-white">CPU Software Encoding (Universal)</option>
-                <option value="cuda" className="bg-[#11141B] text-white">NVIDIA NVENC / CUDA (Recommended)</option>
+                <option value="cpu" className="bg-[#11141B] text-white">CPU Software Encoding (Universal)</option>
+                <option value="nvenc" className="bg-[#11141B] text-white">NVIDIA NVENC / CUDA (Recommended)</option>
                 <option value="qsv" className="bg-[#11141B] text-white">Intel QuickSync Video (QSV)</option>
-                <option value="d3d11va" className="bg-[#11141B] text-white">DirectX 11 Video Acceleration (D3D11VA)</option>
+                <option value="auto" className="bg-[#11141B] text-white">Automatic Hardware Detection</option>
               </select>
             </div>
 
@@ -232,11 +232,11 @@ export const Settings: React.FC<SettingsProps> = ({
                 type="number"
                 min={50}
                 max={98}
-                value={formData.storageWarningThresholdPercent}
+                value={formData.highStorageAlertThreshold}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    storageWarningThresholdPercent: Number(e.target.value) || 85
+                    highStorageAlertThreshold: Number(e.target.value) || 85
                   })
                 }
                 className="w-full bg-[#0A0C10] border border-[#242933] rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500 font-mono"
@@ -249,9 +249,9 @@ export const Settings: React.FC<SettingsProps> = ({
             <label className="flex items-center gap-2.5 cursor-pointer bg-[#0A0C10] p-3 rounded-lg border border-[#242933] hover:border-gray-600 transition-colors">
               <input
                 type="checkbox"
-                checked={formData.automaticRecording}
+                checked={formData.isAutoRecordingEnabled}
                 onChange={(e) =>
-                  setFormData({ ...formData, automaticRecording: e.target.checked })
+                  setFormData({ ...formData, isAutoRecordingEnabled: e.target.checked })
                 }
                 className="w-4 h-4 rounded text-blue-600 bg-[#11141B] border-[#242933] focus:ring-0 cursor-pointer"
               />
@@ -264,9 +264,9 @@ export const Settings: React.FC<SettingsProps> = ({
             <label className="flex items-center gap-2.5 cursor-pointer bg-[#0A0C10] p-3 rounded-lg border border-[#242933] hover:border-gray-600 transition-colors">
               <input
                 type="checkbox"
-                checked={formData.motionRecording}
+                checked={formData.isMotionRecordingEnabled}
                 onChange={(e) =>
-                  setFormData({ ...formData, motionRecording: e.target.checked })
+                  setFormData({ ...formData, isMotionRecordingEnabled: e.target.checked })
                 }
                 className="w-4 h-4 rounded text-blue-600 bg-[#11141B] border-[#242933] focus:ring-0 cursor-pointer"
               />

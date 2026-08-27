@@ -4,7 +4,7 @@ import { CheckCircle2, AlertTriangle, AlertCircle, Info, X } from 'lucide-react'
 export interface ToastMessage {
   id: string;
   type: 'success' | 'warning' | 'error' | 'info';
-  title: string;
+  title?: string;
   message: string;
 }
 
@@ -40,7 +40,7 @@ export const ToastContainer: React.FC<ToastContainerProps> = ({ toasts, onDismis
           >
             {icons[toast.type]}
             <div className="flex-1 min-w-0">
-              <h5 className="text-xs font-semibold">{toast.title}</h5>
+              {toast.title && <h5 className="text-xs font-semibold">{toast.title}</h5>}
               <p className="text-xs text-gray-300 mt-0.5 leading-snug">{toast.message}</p>
             </div>
             <button

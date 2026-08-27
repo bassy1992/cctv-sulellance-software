@@ -39,7 +39,7 @@ export const LiveCameras: React.FC<LiveCamerasProps> = ({
   selectedCamera,
   onSelectCamera
 }) => {
-  const [layout, setLayout] = useState<'1x1' | '2x2' | '3x2' | '3x3'>('3x2');
+  const [layout, setLayout] = useState<'1x1' | '2x2' | '3x2' | '3x3'>('2x2');
   const [statusFilter, setStatusFilter] = useState<'ALL' | 'ONLINE' | 'RECORDING'>('ALL');
   const [isBulkRecording, setIsBulkRecording] = useState(false);
 
